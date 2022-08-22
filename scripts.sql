@@ -35,3 +35,10 @@ CREATE TABLE OrderItems(
   Created DATETIME DEFAULT CURRENT_TIMESTAMP,
   Updated DATETIME DEFAULT CURRENT_TIMESTAMP
 )
+
+INSERT INTO Customers(Id, Name, Email)
+VALUES('06307706-45ce-468e-807d-36d4e7ae8d98', 'Juliano', 'juliano@test.com')
+
+INSERT INTO Items(Id, Name, Price)
+VALUES('ccf0338f-9e44-4795-89f0-685da50ca17a', 'Teclado Mecânico Gamer HyperX Mars RGB', 330),
+('f8193f5a-99c6-4001-8c77-0ddcdd881c65', 'Notebook asus vivobook', 3700)
