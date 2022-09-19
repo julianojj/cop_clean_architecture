@@ -1,10 +1,10 @@
 import { Item } from '../../../domain/entities/Item'
 import { Order } from '../../../domain/entities/Order'
 import { OrderRepository } from '../../../domain/repositories/OrderRepository'
-import { pool } from '../../database/Database'
+import { pool } from '../../database/connection'
 
 export class OrderRepositoryDatabase implements OrderRepository {
-    async save(order: Order): Promise<void> {
+    async saveOrder(order: Order): Promise<void> {
         const connection = await pool.getConnection()
         await connection.query(`INSERT INTO Orders(Id, CustomerId, Total)
         VALUES(?, ?, ?)`, [order.id, order.customerId, order.calculateTotal()])
@@ -17,7 +17,7 @@ export class OrderRepositoryDatabase implements OrderRepository {
         }
     }
 
-    async findAll(): Promise<Order[]> {
+    async findAllOrders(): Promise<Order[]> {
         const connection = await pool.getConnection()
         const ordersData = await connection.query('SELECT * FROM Orders')
         const orders: Order[] = []
@@ -41,7 +41,7 @@ export class OrderRepositoryDatabase implements OrderRepository {
         return orders
     }
 
-    async clean(): Promise<void> {
+    async cleanOrders(): Promise<void> {
         const connection = await pool.getConnection()
         await connection.query('DELETE FROM OrderItems')
         await connection.query('DELETE FROM Orders')

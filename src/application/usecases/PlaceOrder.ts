@@ -21,14 +21,14 @@ export class PlaceOrder {
     ) { }
 
     async execute (input: PlaceOrderInput) {
-        const customer = await this.customerRepository.find(input.customerId)
+        const customer = await this.customerRepository.findCustomer(input.customerId)
         if (!customer) throw new CustomError('customer not found', 404)
         const order = new Order(randomUUID(), customer.id)
         for (const item of input.items) {
-            const data = await this.itemRepository.find(item.id)
+            const data = await this.itemRepository.findItem(item.id)
             if (!data) throw new CustomError('item not found', 404)
             order.addItem(data, item.quantity)
         }
-        await this.orderRepository.save(order)
+        await this.orderRepository.saveOrder(order)
     }
 }

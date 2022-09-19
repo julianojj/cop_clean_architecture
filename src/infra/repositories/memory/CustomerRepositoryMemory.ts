@@ -10,7 +10,7 @@ export class CustomerRepositoryMemory implements CustomerRepository {
         ]
     }
 
-    async find(customerId: string): Promise<Customer> {
+    async findCustomer(customerId: string): Promise<Customer> {
         return this.customers.find(customer => customer.id === customerId)
     }
 }

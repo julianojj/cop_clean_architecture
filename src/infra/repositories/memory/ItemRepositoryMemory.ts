@@ -11,7 +11,7 @@ export class ItemRepositoryMemory implements ItemRepository {
         ]
     }
 
-    async find(itemId: string): Promise<Item> {
+    async findItem(itemId: string): Promise<Item> {
         return this.items.find(item => item.id === itemId)
     }
 }

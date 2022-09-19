@@ -3,8 +3,7 @@ import { PlaceOrder } from '../../src/application/usecases/PlaceOrder'
 import { CustomerRepository } from '../../src/domain/repositories/CustomerRepository'
 import { ItemRepository } from '../../src/domain/repositories/ItemRepository'
 import { OrderRepository } from '../../src/domain/repositories/OrderRepository'
-import { pool } from '../../src/infra/database/Database'
-import { OrderRepositoryDatabase } from '../../src/infra/repositories/database/OrderRepositoryDatabase'
+import { pool } from '../../src/infra/database/connection'
 import { CustomerRepositoryMemory } from '../../src/infra/repositories/memory/CustomerRepositoryMemory'
 import { ItemRepositoryMemory } from '../../src/infra/repositories/memory/ItemRepositoryMemory'
 import { OrderRepositoryMemory } from '../../src/infra/repositories/memory/OrderRepositoryMemory'
@@ -17,7 +16,7 @@ beforeEach(async () => {
     customerRepository = new CustomerRepositoryMemory()
     itemRepository = new ItemRepositoryMemory()
     orderRepository = new OrderRepositoryMemory()
-    await orderRepository.clean()
+    await orderRepository.cleanOrders()
 })
 
 test('Não deve fazer um pedido se o cliente não existir', async () => {
@@ -84,7 +83,7 @@ test('Deve fazer um pedido com 2 items', async () => {
         ]
     }
     await placeOrder.execute(input)
-    const orders = await orderRepository.findAll()
+    const orders = await orderRepository.findAllOrders()
     expect(orders).toHaveLength(1)
 })
 
